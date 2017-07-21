@@ -2,23 +2,9 @@ body {
   max-width: 800px;
   margin: auto;
   padding: 1em;
+  color: #3e3e3e;
+  font-size: 14px;
   line-height: 1.5em;
-}
-
-/* header and footer areas */
-.menu li { display: inline-block; }
-.article-meta, .menu a {
-  text-decoration: none;
-  background: #eee;
-  padding: 5px;
-  border-radius: 5px;
-}
-.menu, .article-meta, footer { text-align: center; }
-.title { font-size: 1.1em; }
-footer a { text-decoration: none; }
-hr {
-  border-style: dashed;
-  color: #ddd;
 }
 
 /* code */
@@ -48,3 +34,49 @@ table {
 table thead th { border-bottom: 1px solid #ddd; }
 th, td { padding: 5px; }
 tr:nth-child(even) { background: #eee }
+
+/* header and footer areas */
+.menu li { display: inline-block; }
+.article-meta, .menu a {
+  text-decoration: none;
+  padding: 5px;
+}
+.menu a:hover {
+  text-decoration: underline;
+}
+.menu, footer { text-align: center; }
+footer a { text-decoration: none; }
+footer p {
+  margin: 0;
+}
+
+/* site */
+
+hr {
+  border-top: 0;
+  border-bottom: 1px solid #ddd;
+}
+h1,h2,h3 {
+  cursor: default;
+}
+h1 {
+  font-size: 24px;
+  color: #000;
+  font-weight: normal;
+}
+span {
+  text-decoration: none;
+}
+
+.article-meta {
+  color: #8c8c8c;
+  font-size: 16px;
+}
+
+footer {
+  margin-top: 60px;
+  line-height: 24px;
+}
+footer span{
+  vertical-align: text-bottom;
+}

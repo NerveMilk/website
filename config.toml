@@ -12,7 +12,7 @@ footnotereturnlinkcontents = "↩"
     note = "/note/:year/:month/:day/:slug/"
 
 [[menu.main]]
-    name = "BlahBlah"
+    name = "BlahBlahBlah"
     url = "/"
     weight = 1
 [[menu.main]]
@@ -22,4 +22,4 @@ footnotereturnlinkcontents = "↩"
 
 [params]
     description = "weird Chinese sci-fi stories."
-    footer = "NerveMilk&copy;2017"
+    footer = ""
