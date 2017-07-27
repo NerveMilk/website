@@ -1,12 +1,16 @@
 {{ partial "header.html" . }}
-<div class="article-meta">
-<h1><span class="title">{{ .Title }}</span></h1>
-{{ if .Params.date }}<span class="date">{{ .Date.Format "2006/01/02" }}</span>{{ end }}
-{{ with .Params.author }}<span class="author">{{ . }}</span>{{ end }}
-</div>
+<div class="page">
+  <div class="article-meta">
+    <h1><span class="id">#{{ .Description }}</span></h1>
+    <h4><span class="title">{{ .Title }}</span></h4>
+  {{ with .Params.author }}
+    <h4><span class="author">by  {{ . }}</span></h4>
+  {{ end }}
+  </div>
 
-<main>
-{{ .Content }}
-</main>
+  <main>
+  {{ .Content }}
+  </main>
+</div>
 
 {{ partial "footer.html" . }}

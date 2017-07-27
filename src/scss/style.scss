@@ -1,0 +1,128 @@
+@import 'reset';
+@import 'typography';
+
+// basic
+body {
+  max-width: 800px;
+  margin: auto;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5em;
+  padding-top: 120px;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+// Global
+.hide {
+  display: none;
+}
+
+nav {
+  background: #000;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 35px 24px 0 24px;
+  height: 85px;
+  z-index: 1;
+  &.expand {
+    height: 100%;
+  }
+  a {
+    color: #999;
+    &:hover {
+      color: #fff;
+    }
+  }
+  h1 {
+    font-size: 25px;
+    line-height: 35px;
+    font-family: "Toppan Bunkyu";
+    text-transform: uppercase;
+  }
+  #logo a{
+    color: #fff;
+  }
+  #btn_menu {
+    font-size: 28px;
+  }
+  #menu {
+    padding: 24px 0;
+    li a {
+      font-size: 28px;
+      line-height: 35px;
+      font-family: "Toppan Bunkyu";
+      text-transform: uppercase;
+    }
+  }
+}
+
+// Front Page
+
+#story_list {
+  width: 100%;
+  overflow: hidden;
+  li {
+    width: 120%;
+    height: 45px;
+    overflow: hidden;
+    &:nth-child(even) {
+      transform: translateX(-24px);
+    }
+    a {
+     font-size: 27px;
+     font-weight: 500;
+     line-height: 45px;
+     color: #fff;
+     padding: 0 6px;
+     @media screen and (-webkit-min-device-pixel-ratio:0) {
+       background: linear-gradient(to right, #111, #fff);
+       background-clip: text;
+       -webkit-text-fill-color: transparent;
+     }
+   }
+  }
+}
+
+// Post Page
+.article-meta {
+  text-align: center;
+  h1 {
+    font-weight: 400;
+    font-size: 27px;
+    line-height: 30px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    font-size: 11px;
+    font-weight: 100;
+    line-height: 14px;
+    margin-top: 12px;
+    .title {
+      font-weight: 600;
+    }
+    .author {
+      font-weight: 300;
+    }
+  }
+}
+
+main {
+  padding: 24px;
+  p {
+    margin-bottom: 18px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #fff;
+    @media screen and (-webkit-min-device-pixel-ratio:0) {
+      background: linear-gradient(to right, #aaa, #fff);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+}

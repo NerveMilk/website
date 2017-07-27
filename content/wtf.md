@@ -1,4 +1,4 @@
 ---
 title: WTF
 ---
-The About Page
+Coming Soon!

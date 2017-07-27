@@ -1,11 +1,10 @@
 ---
-title: "001_WiFi诗人"
+description: "001"
+title: "Wi-Fi诗人"
 date: 2017-02-03T16:10:01-04:00
-author: "#ebebeb"
+author: "Northy Chen"
 draft: false
 ---
-<img src="/img/1.gif" style="width:100%;" alt="Story Image" />
-
 她坐回到蒙苏利公园的那个熟悉座位，从包里掏出带着的书，翻了两下也读不进去。于是，百无聊赖的她把晚上配汤的法棍掰一掰，分给散落在她脚边的鸽子们。她打开手机，点开设置的网络连接，嘴角泛起一丝苦笑。坐在这个座位的她，收到的无线网络讯号正是去年冬天，她上传给Wi-Fi诗人这个匿名团体的一首诗：
 
 “一千年 一万年<br>

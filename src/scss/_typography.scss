@@ -1,0 +1,42 @@
+/**
+ * http://applemusic.tumblr.com/
+ */
+
+/** Light */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 300;
+  src: url("../fonts/SF-UI-Display-Light.otf");
+}
+
+/** Regular */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 400;
+  src: url("../fonts/SF-UI-Display-Regular.otf");
+}
+
+/** Medium */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 500;
+  src: url("../fonts/SF-UI-Display-Medium.otf");
+}
+
+/** Semi Bold */
+@font-face {
+  font-family: "San Francisco";
+  font-weight: 600;
+  src: url("../fonts/SF-UI-Display-Semibold.otf");
+}
+
+/** ExtraBold */
+@font-face {
+  font-family: "Toppan Bunkyu";
+  font-weight: 700;
+  src: url("../fonts/ToppanBunkyuMidashiGothic-ExtraBold.otf");
+}
+
+body {
+    font-family: -apple-system, "San Francisco", Helvetica, Heiti, Arial, sans-serif;
+}

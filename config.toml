@@ -1,6 +1,6 @@
 baseurl = "https://NerveMilk.github.io/"
 languageCode = "en-us"
-title = "Nerve Milk 神经奶"
+title = "NERVEMILK | 神经奶"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
@@ -12,13 +12,29 @@ footnotereturnlinkcontents = "↩"
     note = "/note/:year/:month/:day/:slug/"
 
 [[menu.main]]
-    name = "BlahBlahBlah"
+    name = "Stories"
     url = "/"
     weight = 1
 [[menu.main]]
-    name = "WTF"
-    url = "/wtf/"
+    name = "Projects"
+    url = "/projects/"
     weight = 2
+[[menu.main]]
+    name = "Shop"
+    url = "/shop/"
+    weight = 3
+[[menu.main]]
+    name = "Instagram"
+    url = "https://www.instagram.com/nervemilk/"
+    weight = 4
+[[menu.main]]
+    name = "About"
+    url = "/wtf/"
+    weight = 5
+[[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 6
 
 [params]
     description = "weird Chinese sci-fi stories."

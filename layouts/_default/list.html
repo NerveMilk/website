@@ -6,11 +6,10 @@
 
 {{ .Content }}
 
-<ul>
-  {{ range (where .Data.Pages "Section" "!=" "") }}
+<ul id="story_list">
+  {{ range (where .Data.Pages "Section" "!=" "").ByDate  }}
   <li>
-    <span class="date">{{ .Date.Format "2006/01/02" }}</span>
-    <a href="{{ .URL }}">{{ .Title }}</a>
+    <a href="{{ .URL }}">{{ .Description }}_{{ .Title }}</a>
   </li>
   {{ end }}
 </ul>
