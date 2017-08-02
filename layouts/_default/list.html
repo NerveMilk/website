@@ -6,10 +6,10 @@
 
 {{ .Content }}
 
-<ul id="story_list">
+<ul id="story_list" class="hide">
   {{ range (where .Data.Pages "Section" "!=" "").ByDate  }}
   <li>
-    <a href="{{ .URL }}">{{ .Description }}_{{ .Title }}</a>
+    <a href="{{ .URL }}" class="story-item">{{ .Description }}_{{ .Title }}</a>
   </li>
   {{ end }}
 </ul>

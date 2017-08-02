@@ -15,14 +15,14 @@ footnotereturnlinkcontents = "↩"
     name = "Stories"
     url = "/"
     weight = 1
-[[menu.main]]
-    name = "Projects"
-    url = "/projects/"
-    weight = 2
-[[menu.main]]
-    name = "Shop"
-    url = "/shop/"
-    weight = 3
+# [[menu.main]]
+#     name = "Projects"
+#     url = "/projects/"
+#     weight = 2
+# [[menu.main]]
+#     name = "Shop"
+#     url = "/shop/"
+#     weight = 3
 [[menu.main]]
     name = "Instagram"
     url = "https://www.instagram.com/nervemilk/"

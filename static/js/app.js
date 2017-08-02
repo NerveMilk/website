@@ -1,30 +1,40 @@
-var articles, isMenuDisplayed, toggleMenu;
+var ctx, draw, isMenuDisplayed, setup;
 
 isMenuDisplayed = false;
 
-articles = document.querySelectorAll('#story_list li a');
+ctx = null;
 
-Array.prototype.forEach.call(articles, function(el, i) {
-  var cln, j, num, ref, results, w;
-  w = el.offsetWidth;
-  num = Math.ceil(800 / w);
+setup = function() {
+  var canvas, gradient, index, link, results, startX, startY, stories, story, text, textWidth;
+  canvas = createCanvas(windowWidth, windowHeight);
+  ctx = canvas.drawingContext;
+  canvas.id('canvas').position(0, 0).style('position', 'absolute');
+  background(0);
+  stories = selectAll('.story-item');
+  ctx.font = "27px San Francisco";
+  startX = 0;
+  startY = 25;
+  index = 0;
   results = [];
-  for (i = j = 0, ref = num; 0 <= ref ? j <= ref : j >= ref; i = 0 <= ref ? ++j : --j) {
-    cln = el.cloneNode(true);
-    results.push(el.parentNode.appendChild(cln));
+  while (startY < windowHeight) {
+    story = stories[index];
+    link = story.elt.href;
+    text = story.elt.innerHTML;
+    textWidth = ctx.measureText(text).width;
+    gradient = ctx.createLinearGradient(startX, startY, startX + textWidth, startY);
+    gradient.addColorStop("0", "#111");
+    gradient.addColorStop("1.0", "#fff");
+    ctx.fillStyle = gradient;
+    ctx.fillText(text, startX, startY);
+    startX += textWidth + 20;
+    if (startX > windowWidth) {
+      startX = windowWidth - startX;
+      results.push(startY += 50);
+    } else {
+      results.push(index = (index + 1) % stories.length);
+    }
   }
   return results;
-});
-
-toggleMenu = function() {
-  isMenuDisplayed = !isMenuDisplayed;
-  if (isMenuDisplayed) {
-    document.getElementById('menu').classList.remove('hide');
-    document.getElementsByTagName('nav')[0].classList.add('expand');
-    document.getElementById('btn_menu').innerHTML = 'close';
-  } else {
-    document.getElementById('menu').classList.add('hide');
-    document.getElementsByTagName('nav')[0].classList.remove('expand');
-    document.getElementById('btn_menu').innerHTML = 'menu';
-  }
 };
+
+draw = function() {};
