@@ -1,6 +1,19 @@
-var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, words;
+var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, toggleMenu, words;
 
 isMenuDisplayed = false;
+
+toggleMenu = function() {
+  isMenuDisplayed = !isMenuDisplayed;
+  if (isMenuDisplayed) {
+    document.getElementById('menu').classList.remove('hide');
+    document.getElementsByTagName('nav')[0].classList.add('expand');
+    document.getElementById('btn_menu').innerHTML = 'close';
+  } else {
+    document.getElementById('menu').classList.add('hide');
+    document.getElementsByTagName('nav')[0].classList.remove('expand');
+    document.getElementById('btn_menu').innerHTML = 'menu';
+  }
+};
 
 ctx = null;
 
@@ -16,6 +29,7 @@ Word = (function() {
     this.link = link1;
     this.x = x;
     this.y = y;
+    this.index = random(-50, 0);
     this.width = this.ctx.measureText(this.text).width;
   }
 
@@ -24,20 +38,27 @@ Word = (function() {
     if (curr !== null && this.id === curr.id) {
       this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
       stop = (mouseX - curr.x) / this.width;
-      console.log(stop);
       this.color.addColorStop("0", "#111");
       this.color.addColorStop(stop, "#fff");
-      return this.color.addColorStop("1.0", "#111");
+      this.color.addColorStop("1.0", "#111");
     } else {
       this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
       this.color.addColorStop("0", "#111");
-      return this.color.addColorStop("1.0", "#fff");
+      this.color.addColorStop("1.0", "#fff");
+    }
+    if (this.index < this.text.length) {
+      return this.index++;
     }
   };
 
   Word.prototype.draw = function() {
+    var t;
     this.ctx.fillStyle = this.color;
-    return this.ctx.fillText(this.text, this.x, this.y);
+    t = "";
+    if (this.index > 0) {
+      t = this.text.substring(0, this.index);
+    }
+    return this.ctx.fillText(t, this.x, this.y);
   };
 
   return Word;
@@ -46,10 +67,13 @@ Word = (function() {
 
 setup = function() {
   var canvas, index, link, results, spacing, startX, startY, stories, story, text, word;
-  canvas = createCanvas(windowWidth, windowHeight);
-  ctx = canvas.drawingContext;
-  canvas.id('canvas').position(0, 0).style('position', 'absolute');
   stories = selectAll('.story-item');
+  if (stories.length === 0) {
+    return;
+  }
+  canvas = createCanvas(windowWidth, windowHeight);
+  canvas.id('canvas').position(0, 0).style('position', 'absolute');
+  ctx = canvas.drawingContext;
   ctx.font = "27px San Francisco";
   startX = 0;
   startY = 50;

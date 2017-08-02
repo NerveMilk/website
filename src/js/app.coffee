@@ -9,17 +9,17 @@ isMenuDisplayed = false
 #     cln = el.cloneNode(true)
 #     el.parentNode.appendChild cln
 #
-# toggleMenu = ->
-#   isMenuDisplayed = !isMenuDisplayed
-#   if isMenuDisplayed
-#     document.getElementById('menu').classList.remove 'hide'
-#     document.getElementsByTagName('nav')[0].classList.add 'expand'
-#     document.getElementById('btn_menu').innerHTML = 'close'
-#   else
-#     document.getElementById('menu').classList.add 'hide'
-#     document.getElementsByTagName('nav')[0].classList.remove 'expand'
-#     document.getElementById('btn_menu').innerHTML = 'menu'
-#   return
+toggleMenu = ->
+  isMenuDisplayed = !isMenuDisplayed
+  if isMenuDisplayed
+    document.getElementById('menu').classList.remove 'hide'
+    document.getElementsByTagName('nav')[0].classList.add 'expand'
+    document.getElementById('btn_menu').innerHTML = 'close'
+  else
+    document.getElementById('menu').classList.add 'hide'
+    document.getElementsByTagName('nav')[0].classList.remove 'expand'
+    document.getElementById('btn_menu').innerHTML = 'menu'
+  return
 
 ctx = null
 curr = null
@@ -27,12 +27,12 @@ words = []
 
 class Word
   constructor: (@ctx, @id, @text, @link, @x, @y) ->
+    @index = random(-50, 0)
     @width = @ctx.measureText(@text).width
   update: ->
     if curr != null && @id == curr.id
       @color = @ctx.createLinearGradient(@x, @y, @x + @width, @y)
       stop = (mouseX - curr.x) / @width
-      console.log stop
       @color.addColorStop("0", "#111")
       @color.addColorStop(stop, "#fff")
       @color.addColorStop("1.0", "#111")
@@ -40,16 +40,22 @@ class Word
       @color = @ctx.createLinearGradient(@x, @y, @x + @width, @y)
       @color.addColorStop("0", "#111")
       @color.addColorStop("1.0", "#fff")
+    @index++ if @index < @text.length
   draw: ->
     @ctx.fillStyle = @color
-    @ctx.fillText(@text, @x, @y)
+    t = ""
+    t = @text.substring(0, @index) if @index > 0
+    @ctx.fillText(t, @x, @y)
 
 setup = ->
+  stories = selectAll('.story-item')
+  if stories.length == 0
+    return
+
   canvas = createCanvas(windowWidth, windowHeight)
-  ctx = canvas.drawingContext
   canvas.id('canvas').position(0, 0).style('position', 'absolute')
-  stories = selectAll('.story-item');
-  ctx.font = "27px San Francisco";
+  ctx = canvas.drawingContext
+  ctx.font = "27px San Francisco"
 
   startX = 0
   startY = 50
