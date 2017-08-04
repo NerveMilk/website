@@ -40,7 +40,7 @@ class Word
   constructor: (@ctx, @id, @text, @link, @x, @y) ->
     @animateStartIndex = 0
     @animateSpeed = 1
-    @width = @ctx.measureText(@text).width
+    @width = @ctx.measureText(@text).width * 1.2
     @displayText = @text
     @colorStop = 1
     # -1:null 0:static 1:interactive 2:typewriter 3:blink 4:lightshift
@@ -155,6 +155,6 @@ draw = ->
 windowResized = ->
   resizeCanvas(windowWidth, windowHeight)
 
-mouseClicked = ->
+mousePressed = ->
   if curr != null
     window.location = curr.link

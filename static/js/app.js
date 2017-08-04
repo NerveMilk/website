@@ -1,4 +1,4 @@
-var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMenu, windowResized, words;
+var Word, ctx, curr, draw, isMenuDisplayed, mousePressed, setup, stopHere, toggleMenu, windowResized, words;
 
 isMenuDisplayed = false;
 
@@ -44,7 +44,7 @@ Word = (function() {
     this.y = y;
     this.animateStartIndex = 0;
     this.animateSpeed = 1;
-    this.width = this.ctx.measureText(this.text).width;
+    this.width = this.ctx.measureText(this.text).width * 1.2;
     this.displayText = this.text;
     this.colorStop = 1;
     this.state = 0;
@@ -185,7 +185,7 @@ windowResized = function() {
   return resizeCanvas(windowWidth, windowHeight);
 };
 
-mouseClicked = function() {
+mousePressed = function() {
   if (curr !== null) {
     return window.location = curr.link;
   }
