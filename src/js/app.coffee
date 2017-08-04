@@ -10,6 +10,7 @@ isMenuDisplayed = false
 #     el.parentNode.appendChild cln
 #
 stopHere = (event) ->
+  event.preventDefault();
   if event.stopPropagation
     event.stopPropagation()
   else

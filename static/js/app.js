@@ -3,6 +3,7 @@ var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggl
 isMenuDisplayed = false;
 
 stopHere = function(event) {
+  event.preventDefault();
   if (event.stopPropagation) {
     event.stopPropagation();
   } else {
