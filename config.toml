@@ -11,10 +11,10 @@ footnotereturnlinkcontents = "↩"
     post = "/post/:year/:month/:day/:slug/"
     note = "/note/:year/:month/:day/:slug/"
 
-[[menu.main]]
-    name = "Stories"
-    url = "/"
-    weight = 1
+# [[menu.main]]
+#     name = "Stories"
+#     url = "/"
+#     weight = 1
 # [[menu.main]]
 #     name = "Projects"
 #     url = "/projects/"

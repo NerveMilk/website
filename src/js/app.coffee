@@ -9,7 +9,13 @@ isMenuDisplayed = false
 #     cln = el.cloneNode(true)
 #     el.parentNode.appendChild cln
 #
-toggleMenu = ->
+stopHere = (event) ->
+  if event.stopPropagation
+    event.stopPropagation()
+  else
+    event.cancelBubble = true
+  return
+toggleMenu = (event)->
   isMenuDisplayed = !isMenuDisplayed
   if isMenuDisplayed
     document.getElementById('menu').classList.remove 'hide'
@@ -19,6 +25,26 @@ toggleMenu = ->
     document.getElementById('menu').classList.add 'hide'
     document.getElementsByTagName('nav')[0].classList.remove 'expand'
     document.getElementById('btn_menu').innerHTML = 'menu'
+  if event.stopPropagation
+    event.stopPropagation()
+  else
+    event.cancelBubble = true
+  return
+
+toggleMainMenu = (event)->
+  isMenuDisplayed = !isMenuDisplayed
+  if isMenuDisplayed
+    document.getElementById('menu').classList.remove 'hide'
+    document.getElementsByTagName('nav')[0].classList.add 'expand'
+    document.getElementById('btn_menu').innerHTML = 'close'
+  else
+    document.getElementById('menu').classList.add 'hide'
+    document.getElementsByTagName('nav')[0].classList.remove 'expand'
+    document.getElementById('btn_menu').innerHTML = 'Nervemilk'
+  if event.stopPropagation
+    event.stopPropagation()
+  else
+    event.cancelBubble = true
   return
 
 ctx = null
@@ -27,25 +53,72 @@ words = []
 
 class Word
   constructor: (@ctx, @id, @text, @link, @x, @y) ->
-    @index = random(-50, 0)
+    @animateStartIndex = 0
+    @animateSpeed = 1
     @width = @ctx.measureText(@text).width
+    @displayText = @text
+    @colorStop = 1
+    # -1:null 0:static 1:interactive 2:typewriter 3:blink 4:lightshift
+    @state = 0
+
   update: ->
-    if curr != null && @id == curr.id
-      @color = @ctx.createLinearGradient(@x, @y, @x + @width, @y)
-      stop = (mouseX - curr.x) / @width
-      @color.addColorStop("0", "#111")
-      @color.addColorStop(stop, "#fff")
-      @color.addColorStop("1.0", "#111")
+    # mouse over
+    if curr && curr.id == @id
+      @state = 1
     else
-      @color = @ctx.createLinearGradient(@x, @y, @x + @width, @y)
-      @color.addColorStop("0", "#111")
-      @color.addColorStop("1.0", "#fff")
-    @index++ if @index < @text.length
+      if @state == 1
+        @state = 0
+      if @state == 0
+        r = random(0,1111)
+        if r < 1
+          @state = 2
+          @animateStartIndex = 0
+          @animateSpeed = random(0.11,0.66)
+        else if r < 2
+          @state = 3
+          @animateStartIndex = 0
+        else if r < 4
+          @state = 4
+          @animateStartIndex = 0
+          @animateSpeed = random(0.11,0.66)
+    # static
+    if @state == -1
+      @displayText = ""
+    else if @state == 0
+      @displayText = @text
+    # interactive
+    else if @state == 1
+      @colorStop = max(min((mouseX - curr.x) / curr.width, 1), 0)
+      @displayText = @text
+    # typewriter
+    else if @state == 2
+      if @animateStartIndex < @text.length
+        @animateStartIndex += @animateSpeed
+        @displayText = ""
+        @displayText = @text.substring(0, int(@animateStartIndex)) if @animateStartIndex > 0
+      else
+        @state = 0
+    # blink
+    else if @state == 3
+      @displayText = @text
+      if random(111) < 1
+        @displayText = ""
+      @animateStartIndex++
+      @state = 0 if @animateStartIndex > 1111
+    # lightshift
+    else if @state == 4
+      @colorStop = cos(@animateStartIndex*0.22 * @animateSpeed) * 0.5 + 0.5
+      @displayText = @text
+      @animateStartIndex++
+      @state = 0 if @animateStartIndex > 111
+
   draw: ->
+    @color = @ctx.createLinearGradient(@x, @y, @x + @width, @y)
+    @color.addColorStop("0", "#111")
+    @color.addColorStop(@colorStop, "#fff")
+    @color.addColorStop("1.0", "#111")
     @ctx.fillStyle = @color
-    t = ""
-    t = @text.substring(0, @index) if @index > 0
-    @ctx.fillText(t, @x, @y)
+    @ctx.fillText(@displayText, @x, @y)
 
 setup = ->
   stories = selectAll('.story-item')
@@ -73,6 +146,11 @@ setup = ->
       startY += 50
     else
       index = (index + 1) % stories.length
+
+  # setup initial typewriter animation
+  for word in words
+    word.animateStartIndex = random(-50, 0)
+    word.state = 2
 
 draw = ->
   background 0

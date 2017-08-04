@@ -1,8 +1,16 @@
-var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, toggleMenu, words;
+var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMainMenu, toggleMenu, words;
 
 isMenuDisplayed = false;
 
-toggleMenu = function() {
+stopHere = function(event) {
+  if (event.stopPropagation) {
+    event.stopPropagation();
+  } else {
+    event.cancelBubble = true;
+  }
+};
+
+toggleMenu = function(event) {
   isMenuDisplayed = !isMenuDisplayed;
   if (isMenuDisplayed) {
     document.getElementById('menu').classList.remove('hide');
@@ -12,6 +20,29 @@ toggleMenu = function() {
     document.getElementById('menu').classList.add('hide');
     document.getElementsByTagName('nav')[0].classList.remove('expand');
     document.getElementById('btn_menu').innerHTML = 'menu';
+  }
+  if (event.stopPropagation) {
+    event.stopPropagation();
+  } else {
+    event.cancelBubble = true;
+  }
+};
+
+toggleMainMenu = function(event) {
+  isMenuDisplayed = !isMenuDisplayed;
+  if (isMenuDisplayed) {
+    document.getElementById('menu').classList.remove('hide');
+    document.getElementsByTagName('nav')[0].classList.add('expand');
+    document.getElementById('btn_menu').innerHTML = 'close';
+  } else {
+    document.getElementById('menu').classList.add('hide');
+    document.getElementsByTagName('nav')[0].classList.remove('expand');
+    document.getElementById('btn_menu').innerHTML = 'Nervemilk';
+  }
+  if (event.stopPropagation) {
+    event.stopPropagation();
+  } else {
+    event.cancelBubble = true;
   }
 };
 
@@ -29,36 +60,81 @@ Word = (function() {
     this.link = link1;
     this.x = x;
     this.y = y;
-    this.index = random(-50, 0);
+    this.animateStartIndex = 0;
+    this.animateSpeed = 1;
     this.width = this.ctx.measureText(this.text).width;
+    this.displayText = this.text;
+    this.colorStop = 1;
+    this.state = 0;
   }
 
   Word.prototype.update = function() {
-    var stop;
-    if (curr !== null && this.id === curr.id) {
-      this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
-      stop = (mouseX - curr.x) / this.width;
-      this.color.addColorStop("0", "#111");
-      this.color.addColorStop(stop, "#fff");
-      this.color.addColorStop("1.0", "#111");
+    var r;
+    if (curr && curr.id === this.id) {
+      this.state = 1;
     } else {
-      this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
-      this.color.addColorStop("0", "#111");
-      this.color.addColorStop("1.0", "#fff");
+      if (this.state === 1) {
+        this.state = 0;
+      }
+      if (this.state === 0) {
+        r = random(0, 1111);
+        if (r < 1) {
+          this.state = 2;
+          this.animateStartIndex = 0;
+          this.animateSpeed = random(0.11, 0.66);
+        } else if (r < 2) {
+          this.state = 3;
+          this.animateStartIndex = 0;
+        } else if (r < 4) {
+          this.state = 4;
+          this.animateStartIndex = 0;
+          this.animateSpeed = random(0.11, 0.66);
+        }
+      }
     }
-    if (this.index < this.text.length) {
-      return this.index++;
+    if (this.state === -1) {
+      return this.displayText = "";
+    } else if (this.state === 0) {
+      return this.displayText = this.text;
+    } else if (this.state === 1) {
+      this.colorStop = max(min((mouseX - curr.x) / curr.width, 1), 0);
+      return this.displayText = this.text;
+    } else if (this.state === 2) {
+      if (this.animateStartIndex < this.text.length) {
+        this.animateStartIndex += this.animateSpeed;
+        this.displayText = "";
+        if (this.animateStartIndex > 0) {
+          return this.displayText = this.text.substring(0, int(this.animateStartIndex));
+        }
+      } else {
+        return this.state = 0;
+      }
+    } else if (this.state === 3) {
+      this.displayText = this.text;
+      if (random(111) < 1) {
+        this.displayText = "";
+      }
+      this.animateStartIndex++;
+      if (this.animateStartIndex > 1111) {
+        return this.state = 0;
+      }
+    } else if (this.state === 4) {
+      this.colorStop = cos(this.animateStartIndex * 0.22 * this.animateSpeed) * 0.5 + 0.5;
+      this.displayText = this.text;
+      this.animateStartIndex++;
+      if (this.animateStartIndex > 111) {
+        return this.state = 0;
+      }
     }
   };
 
   Word.prototype.draw = function() {
-    var t;
+    this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
+    this.color.addColorStop("0", "#111");
+    this.color.addColorStop(this.colorStop, "#fff");
+    this.color.addColorStop("1.0", "#111");
     this.ctx.fillStyle = this.color;
-    t = "";
-    if (this.index > 0) {
-      t = this.text.substring(0, this.index);
-    }
-    return this.ctx.fillText(t, this.x, this.y);
+    return this.ctx.fillText(this.displayText, this.x, this.y);
   };
 
   return Word;
@@ -66,7 +142,7 @@ Word = (function() {
 })();
 
 setup = function() {
-  var canvas, index, link, results, spacing, startX, startY, stories, story, text, word;
+  var canvas, i, index, len, link, results, spacing, startX, startY, stories, story, text, word;
   stories = selectAll('.story-item');
   if (stories.length === 0) {
     return;
@@ -78,7 +154,6 @@ setup = function() {
   startX = 0;
   startY = 50;
   index = 0;
-  results = [];
   while (startY < windowHeight) {
     story = stories[index];
     link = story.elt.href;
@@ -89,10 +164,16 @@ setup = function() {
     startX += word.width + spacing;
     if (startX > windowWidth) {
       startX = startX - spacing - windowWidth - word.width;
-      results.push(startY += 50);
+      startY += 50;
     } else {
-      results.push(index = (index + 1) % stories.length);
+      index = (index + 1) % stories.length;
     }
+  }
+  results = [];
+  for (i = 0, len = words.length; i < len; i++) {
+    word = words[i];
+    word.animateStartIndex = random(-50, 0);
+    results.push(word.state = 2);
   }
   return results;
 };
