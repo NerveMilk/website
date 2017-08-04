@@ -1,4 +1,4 @@
-var Word, ctx, curr, draw, isMenuDisplayed, mousePressed, setup, stopHere, toggleMenu, windowResized, words;
+var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMenu, windowResized, words;
 
 isMenuDisplayed = false;
 
@@ -8,7 +8,6 @@ stopHere = function(event) {
   } else {
     event.cancelBubble = true;
   }
-  return true;
 };
 
 toggleMenu = function(event) {
@@ -27,7 +26,6 @@ toggleMenu = function(event) {
   } else {
     event.cancelBubble = true;
   }
-  return true;
 };
 
 ctx = null;
@@ -187,7 +185,7 @@ windowResized = function() {
   return resizeCanvas(windowWidth, windowHeight);
 };
 
-mousePressed = function() {
+mouseClicked = function() {
   if (curr !== null) {
     return window.location = curr.link;
   }

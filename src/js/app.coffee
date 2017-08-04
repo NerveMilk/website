@@ -14,7 +14,7 @@ stopHere = (event) ->
     event.stopPropagation()
   else
     event.cancelBubble = true
-  return true
+  return
 
 toggleMenu = (event)->
   isMenuDisplayed = !isMenuDisplayed
@@ -30,7 +30,7 @@ toggleMenu = (event)->
     event.stopPropagation()
   else
     event.cancelBubble = true
-  return true
+  return
 
 ctx = null
 curr = null
@@ -155,6 +155,6 @@ draw = ->
 windowResized = ->
   resizeCanvas(windowWidth, windowHeight)
 
-mousePressed = ->
+mouseClicked = ->
   if curr != null
     window.location = curr.link
