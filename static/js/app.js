@@ -8,6 +8,7 @@ stopHere = function(event) {
   } else {
     event.cancelBubble = true;
   }
+  return true;
 };
 
 toggleMenu = function(event) {
@@ -26,6 +27,7 @@ toggleMenu = function(event) {
   } else {
     event.cancelBubble = true;
   }
+  return true;
 };
 
 ctx = null;

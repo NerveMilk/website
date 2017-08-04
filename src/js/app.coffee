@@ -14,7 +14,7 @@ stopHere = (event) ->
     event.stopPropagation()
   else
     event.cancelBubble = true
-  return
+  return true
 
 toggleMenu = (event)->
   isMenuDisplayed = !isMenuDisplayed
@@ -30,7 +30,7 @@ toggleMenu = (event)->
     event.stopPropagation()
   else
     event.cancelBubble = true
-  return
+  return true
 
 ctx = null
 curr = null
