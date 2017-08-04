@@ -15,23 +15,8 @@ stopHere = (event) ->
   else
     event.cancelBubble = true
   return
-toggleMenu = (event)->
-  isMenuDisplayed = !isMenuDisplayed
-  if isMenuDisplayed
-    document.getElementById('menu').classList.remove 'hide'
-    document.getElementsByTagName('nav')[0].classList.add 'expand'
-    document.getElementById('btn_menu').innerHTML = 'close'
-  else
-    document.getElementById('menu').classList.add 'hide'
-    document.getElementsByTagName('nav')[0].classList.remove 'expand'
-    document.getElementById('btn_menu').innerHTML = 'menu'
-  if event.stopPropagation
-    event.stopPropagation()
-  else
-    event.cancelBubble = true
-  return
 
-toggleMainMenu = (event)->
+toggleMenu = (event)->
   isMenuDisplayed = !isMenuDisplayed
   if isMenuDisplayed
     document.getElementById('menu').classList.remove 'hide'
@@ -129,6 +114,7 @@ setup = ->
   canvas.id('canvas').position(0, 0).style('position', 'absolute')
   ctx = canvas.drawingContext
   ctx.font = "27px San Francisco"
+  frameRate 60
 
   startX = 0
   startY = 50

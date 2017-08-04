@@ -1,4 +1,4 @@
-var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMainMenu, toggleMenu, words;
+var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMenu, words;
 
 isMenuDisplayed = false;
 
@@ -11,24 +11,6 @@ stopHere = function(event) {
 };
 
 toggleMenu = function(event) {
-  isMenuDisplayed = !isMenuDisplayed;
-  if (isMenuDisplayed) {
-    document.getElementById('menu').classList.remove('hide');
-    document.getElementsByTagName('nav')[0].classList.add('expand');
-    document.getElementById('btn_menu').innerHTML = 'close';
-  } else {
-    document.getElementById('menu').classList.add('hide');
-    document.getElementsByTagName('nav')[0].classList.remove('expand');
-    document.getElementById('btn_menu').innerHTML = 'menu';
-  }
-  if (event.stopPropagation) {
-    event.stopPropagation();
-  } else {
-    event.cancelBubble = true;
-  }
-};
-
-toggleMainMenu = function(event) {
   isMenuDisplayed = !isMenuDisplayed;
   if (isMenuDisplayed) {
     document.getElementById('menu').classList.remove('hide');
@@ -151,6 +133,7 @@ setup = function() {
   canvas.id('canvas').position(0, 0).style('position', 'absolute');
   ctx = canvas.drawingContext;
   ctx.font = "27px San Francisco";
+  frameRate(60);
   startX = 0;
   startY = 50;
   index = 0;

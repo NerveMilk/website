@@ -23,41 +23,30 @@ a {
 }
 
 nav {
-  background: #000;
+  background: #f00;
   position: fixed;
-  top: 0;
-  width: 100%;
-  padding: 35px 24px 0 24px;
-  height: 85px;
+  top: 22px;
+  padding: 11px 22px;
   z-index: 1;
   &.expand {
     height: 100%;
   }
-  a {
-    color: #999;
-    &:hover {
-      color: #fff;
-    }
-  }
-  h1 {
+  h1, a {
+    color: #fff;
     font-size: 25px;
-    line-height: 35px;
+    line-height: 32px;
     font-family: "Toppan Bunkyu";
     text-transform: uppercase;
   }
-  #logo a{
-    color: #fff;
-  }
-  #btn_menu {
-    font-size: 28px;
+  a {
   }
   #menu {
-    padding: 24px 0;
-    li a {
-      font-size: 28px;
-      line-height: 35px;
-      font-family: "Toppan Bunkyu";
-      text-transform: uppercase;
+    padding: 22px 0;
+    a {
+      color: #000;
+      &:hover {
+        color: #fff;
+      }
     }
   }
 }
@@ -71,16 +60,6 @@ nav {
   transform: translate(-50%, -50%);
   width: auto;
   height: auto;
-  padding: 11px 22px;
-  background: #f00;
-  #logo a{
-    color: #fff;
-  }
-  #menu {
-    li a {
-      color: #000;
-    }
-  }
 }
 
 #story_list {

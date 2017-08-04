@@ -1,7 +1,7 @@
 {{ partial "header.html" . }}
 
 <nav id="main_page" onclick="stopHere(event)">
-<h1 id="logo"><a id="btn_menu" onclick="toggleMainMenu(event)">Nervemilk</a></h1>
+<h1 id="logo"><a id="btn_menu" onclick="toggleMenu(event)">Nervemilk</a></h1>
 <ul id="menu" class="hide">
   {{ range .Site.Menus.main }}
   <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
