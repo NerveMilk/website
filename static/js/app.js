@@ -1,4 +1,4 @@
-var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMenu, words;
+var Word, ctx, curr, draw, isMenuDisplayed, mouseClicked, setup, stopHere, toggleMenu, windowResized, words;
 
 isMenuDisplayed = false;
 
@@ -179,6 +179,10 @@ draw = function() {
     results.push(word.draw());
   }
   return results;
+};
+
+windowResized = function() {
+  return resizeCanvas(windowWidth, windowHeight);
 };
 
 mouseClicked = function() {

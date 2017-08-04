@@ -152,6 +152,9 @@ draw = ->
     word.update()
     word.draw()
 
+windowResized = ->
+  resizeCanvas(windowWidth, windowHeight)
+
 mouseClicked = ->
   if curr != null
     window.location = curr.link
