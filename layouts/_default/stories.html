@@ -1,0 +1,20 @@
+{{ partial "header.html" . }} {{ .Content }}
+<div id="stories_page">
+  <nav>
+    <a href="/">
+      <h1>NerveMilk</h1>
+    </a>
+  </nav>
+  <ul id="story_list" class="hide">
+    {{ range (where $.Site.RegularPages "Section" "!=" "").ByDate }}
+    <li>
+      <a href="{{ .URL }}" class="story-item">{{ .Description }}_{{ .Title }}</a>
+    </li>
+    {{ end }}
+  </ul>
+</div>
+
+<script src="/js/libs/p5.min.js"></script>
+<script src="/js/libs/p5.dom.min.js"></script>
+<script src="/js/stories.js"></script>
+{{ partial "footer.html" . }}

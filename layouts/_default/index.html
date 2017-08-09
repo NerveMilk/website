@@ -1,0 +1,21 @@
+{{ partial "header.html" . }}
+
+<div id="index_page">
+  <nav>
+    <a id="cup" onclick="toggleMenu(event)">
+      <div class='milk one'></div>
+      <div class='milk two'></div>
+      <img id="logo" src="/img/brand.svg">
+    </a>
+    <ul id="menu">
+      <a id="closeBtn" onclick="toggleMenu(event)"><h1>Close</h1></a>
+      {{ range .Site.Menus.main }}
+      <li>
+        <a href="{{ .URL | relURL }}"><h1>{{ .Name }}</h1></a>
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
+</div>
+
+{{ partial "footer.html" . }}

@@ -1,4 +1,0 @@
----
-title: Shop
----
-Coming Soon!
