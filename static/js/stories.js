@@ -1,4 +1,4 @@
-var Word, ctx, curr, draw, font, menuHeight, mousePressed, preload, setup, stats, windowResized, words;
+var Word, ctx, curr, draw, font, menuHeight, mousePressed, preload, setup, windowResized, words;
 
 ctx = null;
 
@@ -114,12 +114,6 @@ Word = (function() {
 
 })();
 
-stats = new Stats();
-
-stats.showPanel(0);
-
-document.body.appendChild(stats.dom);
-
 preload = function() {
   return font = loadFont('../fonts/PingFang Bold.ttf');
 };
@@ -164,8 +158,7 @@ setup = function() {
 };
 
 draw = function() {
-  var j, k, len, len1, word;
-  stats.begin();
+  var j, k, len, len1, results, word;
   background(0);
   curr = null;
   for (j = 0, len = words.length; j < len; j++) {
@@ -175,12 +168,13 @@ draw = function() {
       break;
     }
   }
+  results = [];
   for (k = 0, len1 = words.length; k < len1; k++) {
     word = words[k];
     word.update();
-    word.draw();
+    results.push(word.draw());
   }
-  return stats.end();
+  return results;
 };
 
 windowResized = function() {

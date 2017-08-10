@@ -1,3 +1,10 @@
+/** Extra Bold */
+@font-face {
+  font-family: "Brand";
+  font-weight: normal;
+  src: url("../fonts/Brand-ExtraBold.otf");
+}
+
 body {
-    font-family: -apple-system, Helvetica, Heiti, Arial, sans-serif;
+    font-family: -apple-system, "San Francisco", Helvetica, Heiti, Arial, sans-serif;
 }

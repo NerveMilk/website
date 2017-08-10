@@ -91,9 +91,9 @@ class Word
     @ctx.fill()
 
 
-stats = new Stats()
-stats.showPanel(0)
-document.body.appendChild stats.dom
+# stats = new Stats()
+# stats.showPanel(0)
+# document.body.appendChild stats.dom
 
 preload = ->
   font = loadFont('../fonts/PingFang Bold.ttf')
@@ -136,7 +136,7 @@ setup = ->
     word.state = 2
 
 draw = ->
-  stats.begin()
+  # stats.begin()
   background 0
 
   # find mouseover
@@ -149,7 +149,7 @@ draw = ->
   for word in words
     word.update()
     word.draw()
-  stats.end()
+  # stats.end()
 
 windowResized = ->
   resizeCanvas(windowWidth, windowHeight)
