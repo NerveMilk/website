@@ -133,6 +133,7 @@ setup = function() {
   canvas = createCanvas(windowWidth, windowHeight - menuHeight);
   canvas.id('canvas').position(0, menuHeight).style('position', 'absolute');
   ctx = canvas.drawingContext;
+  frameRate(60);
   startX = 0;
   startY = 50;
   index = 0;
