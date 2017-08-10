@@ -1,31 +1,39 @@
-var Word, ctx, curr, draw, font, menuHeight, mousePressed, preload, setup, windowResized, words;
+var Word, ctx, curr, draw, menuHeight, mousePressed, preload, setup, shapes, windowResized, words;
 
 ctx = null;
 
 curr = null;
 
-font = null;
+shapes = null;
 
 words = [];
 
 menuHeight = 40;
 
 Word = (function() {
-  function Word(ctx1, font1, id, text1, link1, x, y) {
+  function Word(ctx1, id, text1, link1, path1, width, x, y) {
+    var cmd, j, len, ref;
     this.ctx = ctx1;
-    this.font = font1;
     this.id = id;
     this.text = text1;
     this.link = link1;
+    this.path = path1;
+    this.width = width;
     this.x = x;
     this.y = y;
     this.animateStartIndex = 0;
     this.animateSpeed = 1;
-    this.width = textWidth(this.text) * 1.1;
-    this.displayText = this.text;
     this.colorStop = 1;
     this.state = 0;
-    this.path = this.font._getPath(this.text, this.x, this.y, 27);
+    this.shapeCount = 0;
+    ref = this.path;
+    for (j = 0, len = ref.length; j < len; j++) {
+      cmd = ref[j];
+      if (cmd.type === 'Z') {
+        this.shapeCount++;
+      }
+    }
+    this.displayText = this.shapeCount;
   }
 
   Word.prototype.update = function() {
@@ -50,25 +58,22 @@ Word = (function() {
       }
     }
     if (this.state === -1) {
-      return this.displayText = "";
+      return this.displayText = 0;
     } else if (this.state === 0) {
-      return this.displayText = this.text;
+      return this.displayText = this.shapeCount;
     } else if (this.state === 1) {
       this.colorStop = max(min((mouseX - curr.x) / curr.width, 1), 0);
-      return this.displayText = this.text;
+      return this.displayText = this.shapeCount;
     } else if (this.state === 2) {
-      if (this.animateStartIndex < this.text.length) {
+      if (this.animateStartIndex < this.shapeCount) {
         this.animateStartIndex += this.animateSpeed;
-        this.displayText = "";
-        if (this.animateStartIndex > 0) {
-          return this.displayText = this.text.substring(0, int(this.animateStartIndex));
-        }
+        return this.displayText = min(int(this.animateStartIndex), this.shapeCount);
       } else {
         return this.state = 0;
       }
     } else if (this.state === 3) {
       this.colorStop = cos(this.animateStartIndex * 0.11 * this.animateSpeed) * 0.5 + 0.5;
-      this.displayText = this.text;
+      this.displayText = this.shapeCount;
       this.animateStartIndex++;
       if (this.animateStartIndex > 111) {
         return this.state = 0;
@@ -77,30 +82,29 @@ Word = (function() {
   };
 
   Word.prototype.draw = function() {
-    var cmd, i, letterCount, pdata;
+    var cmd, i, letterCount;
     this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
     this.color.addColorStop("0", "#111");
     this.color.addColorStop(this.colorStop, "#fff");
     this.color.addColorStop("1.0", "#111");
     this.ctx.fillStyle = this.color;
-    pdata = this.path.commands;
     this.ctx.beginPath();
     i = 0;
     letterCount = 0;
-    while (i < pdata.length) {
-      if (letterCount === this.displayText.length) {
-        i = pdata.length;
+    while (i < this.path.length) {
+      if (letterCount === this.displayText) {
+        i = this.path.length;
         break;
       }
-      cmd = pdata[i];
+      cmd = this.path[i];
       if (cmd.type === 'M') {
-        this.ctx.moveTo(cmd.x, cmd.y);
+        this.ctx.moveTo(cmd.x + this.x, cmd.y + this.y);
       } else if (cmd.type === 'L') {
-        this.ctx.lineTo(cmd.x, cmd.y);
+        this.ctx.lineTo(cmd.x + this.x, cmd.y + this.y);
       } else if (cmd.type === 'C') {
-        this.ctx.bezierCurveTo(cmd.x1, cmd.y1, cmd.x2, cmd.y2, cmd.x, cmd.y);
+        this.ctx.bezierCurveTo(cmd.x1 + this.x, cmd.y1 + this.y, cmd.x2 + this.x, cmd.y2 + this.y, cmd.x + this.x, cmd.y + this.y);
       } else if (cmd.type === 'Q') {
-        this.ctx.quadraticCurveTo(cmd.x1, cmd.y1, cmd.x, cmd.y);
+        this.ctx.quadraticCurveTo(cmd.x1 + this.x, cmd.y1 + this.y, cmd.x + this.x, cmd.y + this.y);
       } else if (cmd.type === 'Z') {
         this.ctx.closePath();
         letterCount++;
@@ -115,11 +119,11 @@ Word = (function() {
 })();
 
 preload = function() {
-  return font = loadFont('../fonts/PingFang Bold.ttf');
+  return shapes = loadJSON('../shapes.json');
 };
 
 setup = function() {
-  var canvas, index, j, len, link, results, spacing, startX, startY, stories, story, text, word;
+  var canvas, index, j, len, link, path, results, spacing, startX, startY, stories, story, text, textWidth, word;
   stories = selectAll('.story-item');
   if (stories.length === 0) {
     return;
@@ -137,7 +141,9 @@ setup = function() {
     story = stories[index];
     link = story.elt.href;
     text = story.elt.innerHTML;
-    word = new Word(ctx, font, index, text, link, startX, startY);
+    path = shapes[text].path || [];
+    textWidth = shapes[text].width || 0;
+    word = new Word(ctx, index, text, link, path, textWidth, startX, startY);
     words.push(word);
     spacing = random(10, 40);
     startX += word.width + spacing;

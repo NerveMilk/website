@@ -1,19 +1,23 @@
 ctx = null
 curr = null
-font = null
+shapes = null
 words = []
 menuHeight = 40
 
 class Word
-  constructor: (@ctx, @font, @id, @text, @link, @x, @y) ->
+  constructor: (@ctx, @id, @text, @link, @path, @width, @x, @y) ->
     @animateStartIndex = 0
     @animateSpeed = 1
-    @width = textWidth(@text) * 1.1 #@ctx.measureText(@text).width * 1.2
-    @displayText = @text
     @colorStop = 1
     # -1:null 0:static 1:interactive 2:typewriter 3:lightshift
     @state = 0
-    @path = @font._getPath @text, @x, @y, 27
+    @shapeCount = 0
+
+    for cmd in @path
+      if cmd.type == 'Z'
+        @shapeCount++
+
+    @displayText = @shapeCount
 
   update: ->
     # mouse over
@@ -34,25 +38,24 @@ class Word
           @animateSpeed = random(0.11,0.66)
     # static
     if @state == -1
-      @displayText = ""
+      @displayText = 0
     else if @state == 0
-      @displayText = @text
+      @displayText = @shapeCount
     # interactive
     else if @state == 1
       @colorStop = max(min((mouseX - curr.x) / curr.width, 1), 0)
-      @displayText = @text
+      @displayText = @shapeCount
     # typewriter
     else if @state == 2
-      if @animateStartIndex < @text.length
+      if @animateStartIndex < @shapeCount
         @animateStartIndex += @animateSpeed
-        @displayText = ""
-        @displayText = @text.substring(0, int(@animateStartIndex)) if @animateStartIndex > 0
+        @displayText = min(int(@animateStartIndex), @shapeCount)
       else
         @state = 0
     # lightshift
     else if @state == 3
       @colorStop = cos(@animateStartIndex*0.11 * @animateSpeed) * 0.5 + 0.5
-      @displayText = @text
+      @displayText = @shapeCount
       @animateStartIndex++
       @state = 0 if @animateStartIndex > 111
 
@@ -62,28 +65,22 @@ class Word
     @color.addColorStop(@colorStop, "#fff")
     @color.addColorStop("1.0", "#111")
     @ctx.fillStyle = @color
-    # @ctx.fillText(@displayText, @x, @y)
-    # fill 255
-    # @font._renderPath @path, @x, @y
-    # text @displayText, @x, @y
-    #
-    pdata = @path.commands
     @ctx.beginPath()
     i = 0
     letterCount = 0
-    while i < pdata.length
-      if letterCount == @displayText.length
-        i = pdata.length
+    while i < @path.length
+      if letterCount == @displayText
+        i = @path.length
         break
-      cmd = pdata[i]
+      cmd = @path[i]
       if cmd.type == 'M'
-        @ctx.moveTo cmd.x, cmd.y
+        @ctx.moveTo cmd.x + @x, cmd.y + @y
       else if cmd.type == 'L'
-        @ctx.lineTo cmd.x, cmd.y
+        @ctx.lineTo cmd.x + @x, cmd.y + @y
       else if cmd.type == 'C'
-        @ctx.bezierCurveTo cmd.x1, cmd.y1, cmd.x2, cmd.y2, cmd.x, cmd.y
+        @ctx.bezierCurveTo cmd.x1 + @x, cmd.y1 + @y, cmd.x2 + @x, cmd.y2 + @y, cmd.x + @x, cmd.y + @y
       else if cmd.type == 'Q'
-        @ctx.quadraticCurveTo cmd.x1, cmd.y1, cmd.x, cmd.y
+        @ctx.quadraticCurveTo cmd.x1 + @x, cmd.y1 + @y, cmd.x + @x, cmd.y + @y
       else if cmd.type == 'Z'
         @ctx.closePath()
         letterCount++
@@ -95,12 +92,11 @@ class Word
 # stats.showPanel(0)
 # document.body.appendChild stats.dom
 
+
 preload = ->
-  font = loadFont('../fonts/PingFang Bold.ttf')
-  # console.log font
+  shapes = loadJSON('../shapes.json');
 
 setup = ->
-
   stories = selectAll('.story-item')
   if stories.length == 0
     return
@@ -120,7 +116,9 @@ setup = ->
     story = stories[index]
     link = story.elt.href
     text = story.elt.innerHTML
-    word = new Word ctx, font, index, text, link, startX, startY
+    path = shapes[text].path || []
+    textWidth = shapes[text].width || 0
+    word = new Word ctx, index, text, link, path, textWidth, startX, startY
     words.push word
     spacing = random 10, 40
     startX += word.width + spacing

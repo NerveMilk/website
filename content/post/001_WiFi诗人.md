@@ -1,6 +1,6 @@
 ---
 description: "001"
-title: "Wi-Fi诗人"
+title: "WiFi诗人"
 date: 2017-02-03T16:10:01-04:00
 author: "Northy Chen"
 draft: false
