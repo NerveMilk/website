@@ -1,16 +1,19 @@
-var Word, ctx, curr, draw, menuHeight, mouseClicked, setup, windowResized, words;
+var Word, ctx, curr, draw, font, menuHeight, mousePressed, preload, setup, stats, windowResized, words;
 
 ctx = null;
 
 curr = null;
+
+font = null;
 
 words = [];
 
 menuHeight = 40;
 
 Word = (function() {
-  function Word(ctx1, id, text1, link1, x, y) {
+  function Word(ctx1, font1, id, text1, link1, x, y) {
     this.ctx = ctx1;
+    this.font = font1;
     this.id = id;
     this.text = text1;
     this.link = link1;
@@ -18,10 +21,11 @@ Word = (function() {
     this.y = y;
     this.animateStartIndex = 0;
     this.animateSpeed = 1;
-    this.width = this.ctx.measureText(this.text).width * 1.2;
+    this.width = textWidth(this.text) * 1.1;
     this.displayText = this.text;
     this.colorStop = 1;
     this.state = 0;
+    this.path = this.font._getPath(this.text, this.x, this.y, 27);
   }
 
   Word.prototype.update = function() {
@@ -73,20 +77,55 @@ Word = (function() {
   };
 
   Word.prototype.draw = function() {
+    var cmd, i, letterCount, pdata;
     this.color = this.ctx.createLinearGradient(this.x, this.y, this.x + this.width, this.y);
     this.color.addColorStop("0", "#111");
     this.color.addColorStop(this.colorStop, "#fff");
     this.color.addColorStop("1.0", "#111");
     this.ctx.fillStyle = this.color;
-    return this.ctx.fillText(this.displayText, this.x, this.y);
+    pdata = this.path.commands;
+    this.ctx.beginPath();
+    i = 0;
+    letterCount = 0;
+    while (i < pdata.length) {
+      if (letterCount === this.displayText.length) {
+        i = pdata.length;
+        break;
+      }
+      cmd = pdata[i];
+      if (cmd.type === 'M') {
+        this.ctx.moveTo(cmd.x, cmd.y);
+      } else if (cmd.type === 'L') {
+        this.ctx.lineTo(cmd.x, cmd.y);
+      } else if (cmd.type === 'C') {
+        this.ctx.bezierCurveTo(cmd.x1, cmd.y1, cmd.x2, cmd.y2, cmd.x, cmd.y);
+      } else if (cmd.type === 'Q') {
+        this.ctx.quadraticCurveTo(cmd.x1, cmd.y1, cmd.x, cmd.y);
+      } else if (cmd.type === 'Z') {
+        this.ctx.closePath();
+        letterCount++;
+      }
+      i += 1;
+    }
+    return this.ctx.fill();
   };
 
   return Word;
 
 })();
 
+stats = new Stats();
+
+stats.showPanel(0);
+
+document.body.appendChild(stats.dom);
+
+preload = function() {
+  return font = loadFont('../fonts/PingFang Bold.ttf');
+};
+
 setup = function() {
-  var canvas, i, index, len, link, results, spacing, startX, startY, stories, story, text, word;
+  var canvas, index, j, len, link, results, spacing, startX, startY, stories, story, text, word;
   stories = selectAll('.story-item');
   if (stories.length === 0) {
     return;
@@ -94,16 +133,16 @@ setup = function() {
   canvas = createCanvas(windowWidth, windowHeight - menuHeight);
   canvas.id('canvas').position(0, menuHeight).style('position', 'absolute');
   ctx = canvas.drawingContext;
-  ctx.font = "27px San Francisco";
-  frameRate(60);
   startX = 0;
   startY = 50;
   index = 0;
+  textSize(27);
+  textAlign(LEFT);
   while (startY < windowHeight) {
     story = stories[index];
     link = story.elt.href;
     text = story.elt.innerHTML;
-    word = new Word(ctx, index, text, link, startX, startY);
+    word = new Word(ctx, font, index, text, link, startX, startY);
     words.push(word);
     spacing = random(10, 40);
     startX += word.width + spacing;
@@ -115,8 +154,8 @@ setup = function() {
     }
   }
   results = [];
-  for (i = 0, len = words.length; i < len; i++) {
-    word = words[i];
+  for (j = 0, len = words.length; j < len; j++) {
+    word = words[j];
     word.animateStartIndex = random(-50, 0);
     results.push(word.state = 2);
   }
@@ -124,30 +163,30 @@ setup = function() {
 };
 
 draw = function() {
-  var i, j, len, len1, results, word;
+  var j, k, len, len1, word;
+  stats.begin();
   background(0);
   curr = null;
-  for (i = 0, len = words.length; i < len; i++) {
-    word = words[i];
+  for (j = 0, len = words.length; j < len; j++) {
+    word = words[j];
     if (mouseX > word.x && mouseX < word.x + word.width && mouseY < (word.y + 10) && mouseY > (word.y - 30)) {
       curr = word;
       break;
     }
   }
-  results = [];
-  for (j = 0, len1 = words.length; j < len1; j++) {
-    word = words[j];
+  for (k = 0, len1 = words.length; k < len1; k++) {
+    word = words[k];
     word.update();
-    results.push(word.draw());
+    word.draw();
   }
-  return results;
+  return stats.end();
 };
 
 windowResized = function() {
   return resizeCanvas(windowWidth, windowHeight);
 };
 
-mouseClicked = function() {
+mousePressed = function() {
   if (curr !== null) {
     return window.location = curr.link;
   }
