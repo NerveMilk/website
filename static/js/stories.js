@@ -11,7 +11,7 @@ words = [];
 menuHeight = 40;
 
 Word = (function() {
-  function Word(ctx1, id, text1, link1, path1, width, x, y) {
+  function Word(ctx1, id, text1, link1, path1, width, x, y, scale1) {
     var cmd, j, len, ref;
     this.ctx = ctx1;
     this.id = id;
@@ -21,6 +21,7 @@ Word = (function() {
     this.width = width;
     this.x = x;
     this.y = y;
+    this.scale = scale1;
     this.animateStartIndex = 0;
     this.animateSpeed = 1;
     this.colorStop = 1;
@@ -98,13 +99,13 @@ Word = (function() {
       }
       cmd = this.path[i];
       if (cmd.type === 'M') {
-        this.ctx.moveTo(cmd.x + this.x, cmd.y + this.y);
+        this.ctx.moveTo(cmd.x * this.scale + this.x, cmd.y * this.scale + this.y);
       } else if (cmd.type === 'L') {
-        this.ctx.lineTo(cmd.x + this.x, cmd.y + this.y);
+        this.ctx.lineTo(cmd.x * this.scale + this.x, cmd.y * this.scale + this.y);
       } else if (cmd.type === 'C') {
-        this.ctx.bezierCurveTo(cmd.x1 + this.x, cmd.y1 + this.y, cmd.x2 + this.x, cmd.y2 + this.y, cmd.x + this.x, cmd.y + this.y);
+        this.ctx.bezierCurveTo(cmd.x1 * this.scale + this.x, cmd.y1 * this.scale + this.y, cmd.x2 * this.scale + this.x, cmd.y2 * this.scale + this.y, cmd.x * this.scale + this.x, cmd.y * this.scale + this.y);
       } else if (cmd.type === 'Q') {
-        this.ctx.quadraticCurveTo(cmd.x1 + this.x, cmd.y1 + this.y, cmd.x + this.x, cmd.y + this.y);
+        this.ctx.quadraticCurveTo(cmd.x1 * this.scale + this.x, cmd.y1 * this.scale + this.y, cmd.x * this.scale + this.x, cmd.y * this.scale + this.y);
       } else if (cmd.type === 'Z') {
         this.ctx.closePath();
         letterCount++;
@@ -123,7 +124,7 @@ preload = function() {
 };
 
 setup = function() {
-  var canvas, index, j, len, link, path, results, spacing, startX, startY, stories, story, text, textWidth, word;
+  var canvas, index, j, len, link, path, results, scale, spacing, startX, startY, stories, story, text, textWidth, word;
   stories = selectAll('.story-item');
   if (stories.length === 0) {
     return;
@@ -132,8 +133,12 @@ setup = function() {
   canvas.id('canvas').position(0, menuHeight).style('position', 'absolute');
   ctx = canvas.drawingContext;
   frameRate(60);
+  scale = 1;
+  if (windowWidth < 480) {
+    scale = 0.75;
+  }
   startX = 0;
-  startY = 50;
+  startY = 50 * scale;
   index = 0;
   textSize(27);
   textAlign(LEFT);
@@ -142,14 +147,14 @@ setup = function() {
     link = story.elt.href;
     text = story.elt.innerHTML;
     path = shapes[text].path || [];
-    textWidth = shapes[text].width || 0;
-    word = new Word(ctx, index, text, link, path, textWidth, startX, startY);
+    textWidth = shapes[text].width * scale || 0;
+    word = new Word(ctx, index, text, link, path, textWidth, startX, startY, scale);
     words.push(word);
-    spacing = random(10, 40);
+    spacing = (random(10, 40)) * scale;
     startX += word.width + spacing;
     if (startX > windowWidth) {
       startX = startX - spacing - windowWidth - word.width;
-      startY += 50;
+      startY += 50 * scale;
     } else {
       index = (index + 1) % stories.length;
     }

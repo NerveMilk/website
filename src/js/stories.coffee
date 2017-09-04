@@ -5,7 +5,7 @@ words = []
 menuHeight = 40
 
 class Word
-  constructor: (@ctx, @id, @text, @link, @path, @width, @x, @y) ->
+  constructor: (@ctx, @id, @text, @link, @path, @width, @x, @y, @scale) ->
     @animateStartIndex = 0
     @animateSpeed = 1
     @colorStop = 1
@@ -74,13 +74,13 @@ class Word
         break
       cmd = @path[i]
       if cmd.type == 'M'
-        @ctx.moveTo cmd.x + @x, cmd.y + @y
+        @ctx.moveTo cmd.x*@scale + @x, cmd.y*@scale + @y
       else if cmd.type == 'L'
-        @ctx.lineTo cmd.x + @x, cmd.y + @y
+        @ctx.lineTo cmd.x*@scale + @x, cmd.y*@scale + @y
       else if cmd.type == 'C'
-        @ctx.bezierCurveTo cmd.x1 + @x, cmd.y1 + @y, cmd.x2 + @x, cmd.y2 + @y, cmd.x + @x, cmd.y + @y
+        @ctx.bezierCurveTo cmd.x1*@scale + @x, cmd.y1*@scale + @y, cmd.x2*@scale + @x, cmd.y2*@scale + @y, cmd.x*@scale + @x, cmd.y*@scale + @y
       else if cmd.type == 'Q'
-        @ctx.quadraticCurveTo cmd.x1 + @x, cmd.y1 + @y, cmd.x + @x, cmd.y + @y
+        @ctx.quadraticCurveTo cmd.x1*@scale + @x, cmd.y1*@scale + @y, cmd.x*@scale + @x, cmd.y*@scale + @y
       else if cmd.type == 'Z'
         @ctx.closePath()
         letterCount++
@@ -106,8 +106,12 @@ setup = ->
   ctx = canvas.drawingContext
   frameRate 60
 
+  scale = 1
+  if windowWidth < 480
+    scale = 0.75
+
   startX = 0
-  startY = 50
+  startY = 50 * scale
   index = 0
   textSize 27
   textAlign LEFT
@@ -117,14 +121,14 @@ setup = ->
     link = story.elt.href
     text = story.elt.innerHTML
     path = shapes[text].path || []
-    textWidth = shapes[text].width || 0
-    word = new Word ctx, index, text, link, path, textWidth, startX, startY
+    textWidth = shapes[text].width * scale || 0
+    word = new Word ctx, index, text, link, path, textWidth, startX, startY, scale
     words.push word
-    spacing = random 10, 40
+    spacing = (random 10, 40) * scale
     startX += word.width + spacing
     if startX > windowWidth
       startX = startX - spacing - windowWidth - word.width
-      startY += 50
+      startY += 50 * scale
     else
       index = (index + 1) % stories.length
 
