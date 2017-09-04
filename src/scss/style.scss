@@ -1,6 +1,5 @@
 @import 'reset';
 @import 'typography';
-
 // basic
 body {
   max-width: 800px;
@@ -16,12 +15,10 @@ a {
   cursor: pointer;
   text-decoration: none;
 }
-
 // p5
 #p5_loading {
   display: none;
 }
-
 // Global
 .hide {
   display: none;
@@ -34,11 +31,13 @@ nav {
   top: 0;
   width: 100%;
   background: #ebebeb;
+
   > a {
     max-width: 800px;
     margin: 0 auto;
     display: block;
   }
+
   h1 {
     margin: 0 22px;
     color: #000;
@@ -48,7 +47,6 @@ nav {
     text-transform: uppercase;
   }
 }
-
 // Index Page
 #index_page {
   nav {
@@ -60,59 +58,75 @@ nav {
     width: auto;
     height: auto;
     background: transparent;
+
     &.expand {
       height: auto;
       background: #ebebeb;
       line-height: auto;
+
       #cup {
         display: none;
       }
+
       #menu {
-        display: block;
+        height: 144px;
+        pointer-events: auto;
+        h1:hover {
+          color: #B3B3B3;
+        }
       }
     }
-    h1{
+
+    h1 {
       color: #000;
       font-size: 25px;
       line-height: 32px;
       font-family: "Brand";
       text-transform: uppercase;
       margin: 0;
-      &:hover {
-        color: #B3B3B3;
-      }
     }
+
     #menu {
-      display: none;
       padding: 11px;
       width: 160px;
+      height: 28px;
+      pointer-events: none;
+      transition: height ease-in-out 0.3s;
       h1 {
         font-size: 22px;
       }
     }
+
     #closeBtn {
       display: block;
       margin-bottom: 16px;
     }
   }
-
   // wave animation
   @keyframes drift {
-    from { transform: rotate(0deg); }
-    from { transform: rotate(360deg); }
+    from {
+      transform: rotate(0deg);
+    }
+
+    from {
+      transform: rotate(360deg);
+    }
   }
+
   #cup {
     overflow: hidden;
+    position: absolute;
     display: block;
-    position: relative;
-    line-height: 0px;
+    line-height: 0;
     width: 180px;
     height: 50px;
+
     #logo {
       position: absolute;
     }
+
     .milk {
-      opacity: .4;
+      opacity: 0.4;
       position: absolute;
       top: 3%;
       left: 50%;
@@ -123,17 +137,18 @@ nav {
       transform-origin: 50% 48%;
       border-radius: 43%;
     }
+
     .milk.one {
       margin-top: 44px;
       animation: drift 3000ms infinite linear;
     }
+
     .milk.two {
       margin-top: 44px;
       animation: drift 5000ms infinite linear;
     }
   }
 }
-
 // Stories Pages
 #stories_page {
   #story_list {
@@ -161,51 +176,53 @@ nav {
     // }
   }
 }
-
 // Post Page
 #post_page {
   position: relative;
   padding-bottom: 111px;
+
   &:before {
     position: fixed;
     top: 32px;
     height: 111px;
     width: 100%;
     content: "";
-    background: linear-gradient(to bottom,
-       rgba(0,0,0, 1) 20%,
-       rgba(0,0,0, 0) 80%
-    );
-    pointer-events: none; /* so the text is still selectable */
+    background: linear-gradient(to bottom, rgba(0,0,0, 1) 20%, rgba(0,0,0, 0) 80% );
+    pointer-events: none;
+    /* so the text is still selectable */
   }
+
   &:after {
     position: fixed;
     bottom: 0;
     height: 111px;
     width: 100%;
     content: "";
-    background: linear-gradient(to top,
-       rgba(0,0,0, 1) 20%,
-       rgba(0,0,0, 0) 80%
-    );
-    pointer-events: none; /* so the text is still selectable */
+    background: linear-gradient(to top, rgba(0,0,0, 1) 20%, rgba(0,0,0, 0) 80% );
+    pointer-events: none;
+    /* so the text is still selectable */
   }
+
   .article-meta {
     text-align: center;
+
     h1 {
       font-weight: 400;
       font-size: 27px;
       line-height: 30px;
       margin-bottom: 10px;
     }
+
     h4 {
       font-size: 11px;
       font-weight: 100;
       line-height: 14px;
       margin-top: 12px;
+
       .title {
         font-weight: 600;
       }
+
       .author {
         font-weight: 300;
       }
@@ -214,6 +231,7 @@ nav {
 
   main {
     padding: 24px;
+
     p {
       margin-bottom: 18px;
       font-size: 15px;
