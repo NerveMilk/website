@@ -8,7 +8,7 @@
       <img id="logo" src="/img/brand.svg">
     </a>
     <ul id="menu">
-      <a id="closeBtn" onclick="toggleMenu(event)"><h1>Close</h1></a>
+      <a id="closeBtn" onclick="toggleMenu(event)"><h1>Menu</h1></a>
       {{ range .Site.Menus.main }}
       <li>
         <a href="{{ .URL | relURL }}"><h1>{{ .Name }}</h1></a>
