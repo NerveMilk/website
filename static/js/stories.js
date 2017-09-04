@@ -1,4 +1,4 @@
-var Word, ctx, curr, draw, menuHeight, mousePressed, preload, setup, shapes, windowResized, words;
+var Word, ctx, curr, draw, menuHeight, mouseReleased, preload, scale, setup, shapes, windowResized, words;
 
 ctx = null;
 
@@ -8,7 +8,9 @@ shapes = null;
 
 words = [];
 
-menuHeight = 40;
+scale = 1;
+
+menuHeight = 32;
 
 Word = (function() {
   function Word(ctx1, id, text1, link1, path1, width, x, y, scale1) {
@@ -124,7 +126,7 @@ preload = function() {
 };
 
 setup = function() {
-  var canvas, index, j, len, link, path, results, scale, spacing, startX, startY, stories, story, text, textWidth, word;
+  var canvas, index, j, len, link, path, results, spacing, startX, startY, stories, story, text, textWidth, word;
   stories = selectAll('.story-item');
   if (stories.length === 0) {
     return;
@@ -138,7 +140,7 @@ setup = function() {
     scale = 0.75;
   }
   startX = 0;
-  startY = 50 * scale;
+  startY = 55 * scale;
   index = 0;
   textSize(27);
   textAlign(LEFT);
@@ -174,7 +176,7 @@ draw = function() {
   curr = null;
   for (j = 0, len = words.length; j < len; j++) {
     word = words[j];
-    if (mouseX > word.x && mouseX < word.x + word.width && mouseY < (word.y + 10) && mouseY > (word.y - 30)) {
+    if (mouseX > word.x && mouseX < word.x + word.width && mouseY < (word.y + 12 * scale) && mouseY > (word.y - 32 * scale)) {
       curr = word;
       break;
     }
@@ -192,7 +194,7 @@ windowResized = function() {
   return resizeCanvas(windowWidth, windowHeight);
 };
 
-mousePressed = function() {
+mouseReleased = function() {
   if (curr !== null) {
     return window.location = curr.link;
   }

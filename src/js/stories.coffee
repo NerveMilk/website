@@ -2,7 +2,8 @@ ctx = null
 curr = null
 shapes = null
 words = []
-menuHeight = 40
+scale = 1
+menuHeight = 32
 
 class Word
   constructor: (@ctx, @id, @text, @link, @path, @width, @x, @y, @scale) ->
@@ -111,7 +112,7 @@ setup = ->
     scale = 0.75
 
   startX = 0
-  startY = 50 * scale
+  startY = 55 * scale
   index = 0
   textSize 27
   textAlign LEFT
@@ -144,7 +145,7 @@ draw = ->
   # find mouseover
   curr = null
   for word in words
-    if mouseX > word.x && mouseX < word.x + word.width && mouseY < (word.y + 10) && mouseY > (word.y - 30)
+    if mouseX > word.x && mouseX < word.x + word.width && mouseY < (word.y + 12 * scale) && mouseY > (word.y - 32 * scale)
       curr = word
       break
 
@@ -156,6 +157,6 @@ draw = ->
 windowResized = ->
   resizeCanvas(windowWidth, windowHeight)
 
-mousePressed = ->
+mouseReleased = ->
   if curr != null
     window.location = curr.link
