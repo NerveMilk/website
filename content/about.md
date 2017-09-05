@@ -8,6 +8,6 @@ draft: false
 
 所有的参与者或合作者都是神经元，信息和想象在由神经元组成的网络里传播、交互、演变，酿生出优质奶蛋白，给各类好奇心饥渴的生物提供氧料。我们崇尚一切让脑洞大开的假设，不在乎其宏大壮阔或细枝末节，可能荒诞、浪漫、讽刺、愚蠢…… “引起神经兴奋，刺激奶源”是我们的基准。
 
-NERVEMILK is an experimental platform established in 2016 by Northy and XY. The two started out writing speculative short stories based on everyday observation. Using various means, they then prototyped some of the scenarios from fiction into reality.
+NERVEMILK is an experimental platform established in 2016 by Northy and XY. The two started out writing speculative short stories based on everyday observations. Then they prototyped some of the scenarios, taking them from fiction into reality.
 
-NERVEMILK welcomes all forms of collaboration. NERVEMILK is a toolset whose sole purpose is to help audiences question current trends and imagine desirable futures, eventually growing into a manufacturable system digesting any and all kinds of hypotheses--romantic, absurd, cynical, stupid.
+NERVEMILK welcomes all forms of collaboration. It is a toolset whose sole purpose is to help audiences question current trends and imagine desirable futures. Eventually it will grow into a manufacturable system digesting any and all kinds of hypotheses be they romantic, absurd, cynical, or just stupid.
