@@ -1,0 +1,14 @@
+{{ partial "header.html" . }}
+
+<div id="submit_page">
+  <form id="submit_form">
+    <input id="user_name" name="name" value="Your Name">
+    <input id="user_email" name="email" value="Email">
+    <input id="user_story" name="story" value="Your Story">
+    <input type="submit" value="Send">
+  </form>
+</div>
+
+<script src="/js/libs/require.min.js"></script>
+<script src="/js/submit.js"></script>
+{{ partial "footer.html" . }}

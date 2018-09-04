@@ -24,6 +24,7 @@
     "gulp-sass": "^3.1.0"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.3.1",
     "opentype": "^0.1.2"
   }
 }
