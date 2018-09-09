@@ -2,13 +2,28 @@
 
 <div id="submit_page">
   <form id="submit_form">
-    <input id="user_name" name="name" value="Your Name">
-    <input id="user_email" name="email" value="Email">
-    <input id="user_story" name="story" value="Your Story">
-    <input type="submit" value="Send">
+    <div class="block">
+      <label for="arthur">Arthur</label>
+      <input id="arthur" name="arthur" value="Li Lei">
+    </div>
+    <div class="block">
+      <label for="email">Email</label>
+      <input id="email" name="email" value="hanmeimei@gmail.com">
+    </div>
+    <div class="block">
+      <label for="title">Title</label>
+      <input id="title" name="title" value="李雷和韩梅梅">
+    </div>
+    <div class="block">
+      <label for="story">Story</label>
+      <textarea id="story" name="story" rows="10" cols="30" value=""></textarea>
+    </div>
+    <div class="block">
+      <input type="submit" value="Send">
+    </div>
   </form>
 </div>
 
-<script src="/js/libs/require.min.js"></script>
+<script src="/js/libs/axios.min.js"></script>
 <script src="/js/submit.js"></script>
 {{ partial "footer.html" . }}

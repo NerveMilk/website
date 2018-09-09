@@ -248,3 +248,25 @@ nav {
     }
   }
 }
+
+#submit_page {
+  max-width: 600px;
+  margin: auto;
+  #submit_form {
+    display: flex;
+    flex-direction: column;
+    .block {
+      margin-top: 20px;
+      label, input, textarea {
+        display: block;
+        width: 100%;
+      }
+      label {
+        margin-bottom: 5px;
+      }
+      textarea {
+        resize: vertical;
+      }
+    }
+  }
+}
