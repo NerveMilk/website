@@ -1,6 +1,6 @@
 baseurl = "https://NerveMilk.github.io/"
 languageCode = "en-us"
-title = "NERVEMILK | 神经奶"
+title = "神经奶"
 googleAnalytics = ""
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
@@ -13,16 +13,24 @@ footnotereturnlinkcontents = "↩"
 
 [[menu.main]]
     name = "Stories"
-    url = "/stories/"
+    identifier = "stories"
+    url = "/"
     weight = 1
 [[menu.main]]
-    name = "Instagram"
-    url = "https://www.instagram.com/nervemilk/"
+    name = "News"
+    url = "/news/"
+    identifier = "news"
     weight = 2
 [[menu.main]]
-    name = "About"
-    url = "/about/"
+    name = "Instagram"
+    identifier = "ins"
+    url = "https://www.instagram.com/nervemilk/"
     weight = 3
+[[menu.main]]
+    name = "About"
+    identifier = "about"
+    url = "/about/"
+    weight = 4
 
 [params]
     description = ""

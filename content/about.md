@@ -1,7 +1,7 @@
 ---
-description: "000"
-title: 神经奶
-author: "Northy & XY"
+description: "2017年1月"
+title: "简单介绍"
+layout: "about"
 draft: false
 ---
 神经奶是 Northy 和 XY 在2016年建立的开放性实验平台。从对现实生活的观察出发，以虚构写作为起点，对一切已知事物与事理进行重新想象和解构，随之以不同载体从各种领域进行现实化的诠释。

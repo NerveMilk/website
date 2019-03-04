@@ -3,7 +3,7 @@ curr = null
 shapes = null
 words = []
 scale = 1
-menuHeight = 32
+menuHeight = 50
 
 class Word
   constructor: (@ctx, @id, @text, @link, @path, @width, @x, @y, @scale) ->

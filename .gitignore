@@ -1,5 +1,12 @@
-node_modules/
-public
-
-.DS_Store
+# Node
+node_modules/**/*
+data/node_modules/**/*
+npm-debug.log
 .env
+
+# builds
+/ios/build
+/android/build
+
+# OS X
+.DS_Store

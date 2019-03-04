@@ -1,4 +1,4 @@
-var isMenuDisplayed, toggleMenu;
+var i, isMenuDisplayed, links, linksLength, toggleMenu;
 
 isMenuDisplayed = false;
 
@@ -15,3 +15,16 @@ toggleMenu = function(event) {
     event.cancelBubble = true;
   }
 };
+
+links = document.body.getElementsByTagName('a');
+
+i = 0;
+
+linksLength = links.length;
+
+while (i < linksLength) {
+  if (links[i].hostname !== window.location.hostname) {
+    links[i].target = '_blank';
+  }
+  i++;
+}

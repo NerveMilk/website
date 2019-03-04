@@ -1,8 +1,13 @@
-/** Extra Bold */
+/* Brand Fonts */
 @font-face {
-  font-family: "Brand";
+  font-family: "Brand-Medium";
   font-weight: normal;
-  src: url("../fonts/Brand-ExtraBold.otf");
+  src: url("../fonts/Brand-Medium.otf");
+}
+@font-face {
+  font-family: "Brand-Heavy";
+  font-weight: normal;
+  src: url("../fonts/Brand-Heavy.otf");
 }
 
 body {

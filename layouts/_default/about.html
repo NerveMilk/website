@@ -12,11 +12,8 @@
 </nav>
 <div id="post_page">
   <div class="article-meta">
-    <h1><span class="id">#{{ .Description }}</span></h1>
-    <h4><span class="title">{{ .Title }}</span></h4>
-  {{ with .Params.author }}
-    <h4><span class="author">by  {{ . }}</span></h4>
-  {{ end }}
+    <h4><span class="id">{{ .Description }}</span></h4>
+    <h2><span class="title">{{ .Title }}</span></h2>
   </div>
 
   <main>

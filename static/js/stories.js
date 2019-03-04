@@ -10,7 +10,7 @@ words = [];
 
 scale = 1;
 
-menuHeight = 32;
+menuHeight = 50;
 
 Word = (function() {
   function Word(ctx1, id, text1, link1, path1, width, x, y, scale1) {

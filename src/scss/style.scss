@@ -30,23 +30,117 @@ nav {
   left: 0;
   top: 0;
   width: 100%;
+  height: 50px;
   background: #ebebeb;
 
-  > a {
-    // max-width: 800px;
-    margin: 0 auto;
-    display: block;
-  }
-
   h1 {
-    margin: 0 22px;
+    position: absolute;
     color: #000;
     font-size: 22px;
-    line-height: 32px;
-    font-family: "Brand";
+    line-height: 50px;
+    font-family: "Brand-Heavy";
     text-transform: uppercase;
+    letter-spacing: 9.6px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    &.deskop {
+      display: block;
+    }
+    &.mobile {
+      display: none;
+    }
+    a, a:visited, a:active, a:hover{
+      color: #000;
+    }
+  }
+
+  ul {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+  }
+
+  li {
+    margin: 0 30px;
+    line-height: 50px;
+    text-transform: uppercase;
+    font-family: "Brand-Medium";
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 2px;
+    a {
+      color: #000;
+    }
+    &#news {
+      float: left;
+    }
+    &#ins {
+      float: left;
+    }
+    &#about {
+      float: right;
+    }
+    &#stories {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    h1 {
+      letter-spacing: 6px;
+      &.desktop {
+        display:  none;
+      }
+      &.mobile {
+        display: block;
+        position: relative;
+        text-align: center;
+      }
+    }
+    ul {
+      display: none;
+      padding: 0;
+      li {
+        font-family: "Brand-Heavy";
+        font-size: 22px;
+        letter-spacing: 6px;
+        float: none !important;
+        text-align: center;
+        line-height: 30px;
+        padding: 0;
+        margin: 50px 0;
+        &#stories {
+          display: block;
+        }
+      }
+    }
+    &.expand {
+      height: 100%;
+      h1.mobile {
+        &:after {
+          position: fixed;
+          width: 100%;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 50px;
+          content: "";
+          background: linear-gradient(to top, rgba(255,255,255, 1) 20%, rgba(255, 255, 255, 0) 80% );
+          pointer-events: none;
+        }
+      }
+      ul{
+        height: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 50px;
+      }
+    }
   }
 }
+
 // Index Page
 #index_page {
   nav {
@@ -183,7 +277,7 @@ nav {
 
   &:before {
     position: fixed;
-    top: 32px;
+    top: 50px;
     height: 111px;
     width: 100%;
     content: "";
@@ -210,6 +304,16 @@ nav {
       font-weight: 400;
       font-size: 27px;
       line-height: 30px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 30px;
+      letter-spacing: 4px;
+      margin-top: 10px;
       margin-bottom: 10px;
     }
 

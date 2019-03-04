@@ -1,9 +1,15 @@
 {{ partial "header.html" . }} {{ .Content }}
 <div id="stories_page">
   <nav>
-    <a href="/">
-      <h1>NerveMilk</h1>
-    </a>
+    <h1 class="desktop"><a href="/">NerveMilk</a></h1>
+    <h1 onclick="toggleMenu(event)" class="mobile">NerveMilk</h1>
+    <ul>
+      {{ range .Site.Menus.main }}
+      <li id="{{ .Identifier }}">
+        <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+      </li>
+      {{ end }}
+    </ul>
   </nav>
   <ul id="story_list" class="hide">
     {{ range (where $.Site.RegularPages "Section" "!=" "").ByDate }}
