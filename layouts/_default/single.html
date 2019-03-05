@@ -1,7 +1,7 @@
 {{ partial "header.html" . }}
 <nav>
-  <h1 class="desktop"><a href="/">NerveMilk</a></h1>
-  <h1 onclick="toggleMenu(event)" class="mobile">NerveMilk</h1>
+  <h1><a href="/">NerveMilk</a></h1>
+  <a class="menu-btn" onclick="toggleMenu(event)"></a>
   <ul>
     {{ range .Site.Menus.main }}
     <li id="{{ .Identifier }}">
@@ -22,6 +22,8 @@
   <main>
   {{ .Content }}
   </main>
+
+  <a class="back-btn" href="/">< 返回故事集 | Back to Stories </a>
 </div>
 
 {{ partial "footer.html" . }}

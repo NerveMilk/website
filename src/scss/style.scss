@@ -24,6 +24,15 @@ a {
   display: none;
 }
 
+.back-btn, .back-btn:visited, .back-btn:active, .back-btn:hover{
+  color: #fff;
+  font-size: 10px;
+  padding: 24px;
+  font-family: "Brand-Medium";
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
 nav {
   position: fixed;
   z-index: 1;
@@ -37,22 +46,19 @@ nav {
     position: absolute;
     color: #000;
     font-size: 22px;
-    line-height: 50px;
+    line-height: 54px;
     font-family: "Brand-Heavy";
     text-transform: uppercase;
     letter-spacing: 9.6px;
     left: 50%;
     transform: translateX(-50%);
     cursor: pointer;
-    &.deskop {
-      display: block;
-    }
-    &.mobile {
-      display: none;
-    }
     a, a:visited, a:active, a:hover{
       color: #000;
     }
+  }
+  a.menu-btn {
+    display: none;
   }
 
   ul {
@@ -89,52 +95,37 @@ nav {
   @media only screen and (max-width: 767px) {
     h1 {
       letter-spacing: 6px;
-      &.desktop {
-        display:  none;
-      }
-      &.mobile {
-        display: block;
-        position: relative;
-        text-align: center;
-      }
+      pointer-events: none;
+    }
+    a.menu-btn {
+      display: block;
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      right: 0px;
+      top: 0;
+      background: url("/img/menu.svg") center center no-repeat;
     }
     ul {
       display: none;
       padding: 0;
       li {
-        font-family: "Brand-Heavy";
-        font-size: 22px;
-        letter-spacing: 6px;
+        font-family: "Brand-Medium";
         float: none !important;
-        text-align: center;
-        line-height: 30px;
-        padding: 0;
-        margin: 50px 0;
+        text-align: left;
+        line-height: 40px;
+        margin: 0;
+        padding: 0 calc(50% - 85px);
+        border-top: 1px solid #000;
         &#stories {
           display: block;
         }
       }
     }
     &.expand {
-      height: 100%;
-      h1.mobile {
-        &:after {
-          position: fixed;
-          width: 100%;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          height: 50px;
-          content: "";
-          background: linear-gradient(to top, rgba(255,255,255, 1) 20%, rgba(255, 255, 255, 0) 80% );
-          pointer-events: none;
-        }
-      }
+      height: 210px;
       ul{
-        height: calc(100% - 50px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: block;
         margin-top: 50px;
       }
     }
@@ -348,6 +339,10 @@ nav {
       }
       em {
         font-style: italic;
+      }
+      a {
+        text-decoration: underline;
+        text-decoration-color: white;
       }
     }
   }
